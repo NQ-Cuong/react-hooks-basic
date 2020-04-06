@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import queryString from 'query-string';
+
 import './App.scss';
 import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 import PostList from './components/PostList';
+import Pagination from './components/Pagination';
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -12,6 +15,15 @@ function App() {
   ]);
 
   const [postList, setPostList] = useState([]);
+  const [pagination, setPagination] = useState({
+    _page: 1,
+    _limit: 10,
+    _totalRows: 1,
+  });
+  const [filters, setFilters] = useState({
+    _limit: 10,
+    _page: 1,
+  });
 
   useEffect(() => {
     async function fetchPostList() {
@@ -39,6 +51,14 @@ function App() {
   useEffect(() => {
     console.log('TODO list effect');
   });
+
+  function handlePageChange(newPage) {
+    console.log('New page: ', newPage);
+    setFilters({
+      ...filters,
+      _page: newPage,
+    });
+  }
 
   function handleTodoClick(todo) {
     console.log(todo);
@@ -71,6 +91,10 @@ function App() {
       {/* <TodoForm onSubmit={handleTodoFormSubmit} />
       <TodoList todos={todoList} onTodoClick={handleTodoClick} /> */}
       <PostList posts={postList} />
+      <Pagination
+        pagination={pagination}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }

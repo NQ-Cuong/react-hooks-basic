@@ -6,6 +6,7 @@ import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 import PostList from './components/PostList';
 import Pagination from './components/Pagination';
+import PostFiltersForm from './components/PostFiltersForm';
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -73,15 +74,24 @@ function App() {
   function handleTodoFormSubmit(formValues) {
     console.log('Form submit: ', formValues);
     // add new todo to current todo list
-    if(formValues.title !== ''){
-    const newTodo = {
-      id: todoList.length + 1,
-      ...formValues,
-    };
-    const newTodoList = [...todoList];
-    newTodoList.push(newTodo);
-    setTodoList(newTodoList);
+    if (formValues.title !== '') {
+      const newTodo = {
+        id: todoList.length + 1,
+        ...formValues,
+      };
+      const newTodoList = [...todoList];
+      newTodoList.push(newTodo);
+      setTodoList(newTodoList);
+    }
   }
+
+  function handleFiltersChange(newFilters) {
+    console.log('New filters: ', newFilters);
+    setFilters({
+      ...filters,
+      _page: 1,
+      title_like: newFilters.searchTerm,
+    });
   }
 
   return (
@@ -90,6 +100,7 @@ function App() {
 
       {/* <TodoForm onSubmit={handleTodoFormSubmit} />
       <TodoList todos={todoList} onTodoClick={handleTodoClick} /> */}
+      <PostFiltersForm onSubmit={handleFiltersChange} />
       <PostList posts={postList} />
       <Pagination
         pagination={pagination}

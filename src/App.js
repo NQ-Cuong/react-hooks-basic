@@ -8,6 +8,8 @@ import PostList from './components/PostList';
 import Pagination from './components/Pagination';
 import PostFiltersForm from './components/PostFiltersForm';
 import Clock from './components/Clock';
+import BetterClock from './components/BetterClock';
+import MagicBox from './components/MagicBox';
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -75,15 +77,13 @@ function App() {
   function handleTodoFormSubmit(formValues) {
     console.log('Form submit: ', formValues);
     // add new todo to current todo list
-    if (formValues.title !== '') {
-      const newTodo = {
-        id: todoList.length + 1,
-        ...formValues,
-      };
-      const newTodoList = [...todoList];
-      newTodoList.push(newTodo);
-      setTodoList(newTodoList);
-    }
+    const newTodo = {
+      id: todoList.length + 1,
+      ...formValues,
+    };
+    const newTodoList = [...todoList];
+    newTodoList.push(newTodo);
+    setTodoList(newTodoList);
   }
 
   function handleFiltersChange(newFilters) {
@@ -99,19 +99,23 @@ function App() {
 
   return (
     <div className="app">
-      <h1>React hooks - TodoList</h1>
-      
-      {showClock && <Clock />}
-      <button onClick={() => setShowClock(false)}>Hide clock</button>
+      <h1>React hooks - Clock</h1>
 
-      {/* <TodoForm onSubmit={handleTodoFormSubmit} />
-      <TodoList todos={todoList} onTodoClick={handleTodoClick} /> */}
-      <PostFiltersForm onSubmit={handleFiltersChange} />
+      <MagicBox />
+
+      {/* {showClock && <Clock />} */}
+      {/* <BetterClock /> */}
+      {/* <button onClick={() => setShowClock(false)}>Hide clock</button> */}
+
+      {/* <TodoForm onSubmit={handleTodoFormSubmit} /> */}
+      {/* <TodoList todos={todoList} onTodoClick={handleTodoClick} /> */}
+
+      {/* <PostFiltersForm onSubmit={handleFiltersChange} />
       <PostList posts={postList} />
       <Pagination
         pagination={pagination}
         onPageChange={handlePageChange}
-      />
+      /> */}
     </div>
   );
 }
